@@ -1,7 +1,10 @@
 package com.example.rsatest;
 
+import java.io.ByteArrayOutputStream;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+
+import javax.crypto.Cipher;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -39,6 +42,7 @@ public class TestRSA extends Activity implements OnClickListener {
 		// 加密
 		case R.id.btn1:
 			String source = et1.getText().toString().trim();
+			source="{'aa':'bb','test':'是历代封建开市大吉福克斯的','ssss':'222'}";
 			try {
 				// 从字符串中得到公钥
 				PublicKey publicKey = RSAUtils.loadPublicKey(Const.PUCLIC_KEY);
@@ -59,7 +63,7 @@ public class TestRSA extends Activity implements OnClickListener {
 		// 解密
 		case R.id.btn2:
 			String encryptContent = et2.getText().toString().trim();
-//			encryptContent="sMWeXLFXdp8+pmtdrZ5Im8NOpuqosaarxknhfvvKCdtZuT5BbgAcWIObhg1NbonbtQV/jCF7RlKvRj8QECajMktP9bamMYvekhxmr7OFcziwVjUUN1J8xLyPr8l/V+GLNriyISCWoQVnvvnt4g1bwepAyspWcQW3ZsPUlTb2clM=";
+			encryptContent="SivcVCVg00SLzpfCNkA0YvyOqdRxqt0OyEUehoOpL4kY/Hk0zCt1oRwjylflhpq9MmZQwph9EvDU7eyM6tvqIkLUdgyxeOQq4v1z2y4THJegE5TqklkIJa2+3oU6TixwL5KClunT85Wadyb2N+MZlAdqA6rGmJ8Ylv8AGI9q1qKVMh2QSmK+EIhzTkqi09Beo2mR3w893g44py/WF8WZPY0cTSroyaQOV5WauttW2HAdG+HuuNO6cMSofeyOdxmE6Oqa0tTKA1EtuAqiyvXb1yOS9vLN7z7OleOrCWUETOJbAZ62eJflXrsyVc7y5Y7iSFt+KSSztd+pZU2JhrNJCg==";
 			try {
 				// 从字符串中得到私钥
 				PrivateKey privateKey = RSAUtils
@@ -69,8 +73,9 @@ public class TestRSA extends Activity implements OnClickListener {
 				// getResources().getAssets().open("pkcs8_rsa_private_key.pem");
 				// PrivateKey privateKey = RSAUtils.loadPrivateKey(inPrivate);
 				// 因为RSA加密后的内容经Base64再加密转换了一下，所以先Base64解密回来再给RSA解密
-				byte[] decryptByte = RSAUtils.decryptData(
-						Base64Utils.decode(encryptContent), privateKey);
+//				byte[] decryptByte = RSAUtils.decryptData(
+//						Base64Utils.decode(encryptContent), privateKey);
+				byte[] decryptByte=RSAUtils.decryptData128(Base64Utils.decode(encryptContent),privateKey);
 				String decryptStr = new String(decryptByte);
 				et3.setText(decryptStr);
 			} catch (Exception e) {
@@ -81,5 +86,6 @@ public class TestRSA extends Activity implements OnClickListener {
 			break;
 		}
 	}
+
 
 }
